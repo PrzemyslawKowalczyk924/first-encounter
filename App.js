@@ -45,21 +45,23 @@ const email = '@gmail.com';
   }
 
  const people = [];
- let person = {};
 
   for (let index = 0; index < 20; index++){
-    person[index] = {
-      gender: sex = randChoice(genders),
-      firstName: sex === 'm' ? nameOfMen = randChoice(maleNames) : nameOfFemale = randChoice(femaleNames),
-      lastName: sureNameOf = randChoice(lastNames),
+    const gender = randChoice(genders);
+    const firstName = gender === 'm' ? randChoice(maleNames) : randChoice(femaleNames);
+    const lastName = randChoice(lastNames);
+    const person = {
+      gender,
+      firstName,
+      lastName,
       age: Math.floor(Math.random() * (78 - 18 + 1) + 18),
-      mail: sex === 'm' ? emailOf = generateEmail(nameOfMen, sureNameOf, email) : emailOf = generateEmail(nameOfFemale, sureNameOf, email),
-      phone: sex === 'm' ? generatePhone('m') : generatePhone('f')  
+      mail: generateEmail(firstName, lastName, email),
+      phone: generatePhone(gender)  
     };
-    people.push(person[index]); 
+    people.push(person); 
   }
 
- let arrayToString = JSON.stringify(Object.assign({}, person));
+ let arrayToString = JSON.stringify(people);
 
 fs.writeFile('outputfile.txt', arrayToString, (err) => {
   if (err) throw err;
